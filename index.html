@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const server = `https://jsonplaceholder.typicode.com/posts`;
+      const users = [{ id: 1, title: "..." }];
+      // 전체조회
+      fetch("/")
+        .then((resp) => resp.json)
+        .then((json) => console.log(json));
+      // 단건조회
+      fetch("/1")
+        .then((resp) => resp.json)
+        .then((json) => console.log(json));
+      // 수정
+      fetch("/update/1", {
+        method: "put",
+        body: JSON.stringify({
+          id: 1,
+          title: "asd",
+          body: "qwer",
+          userId: 1,
+        }),
+        headers: {
+          "content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((resp) => resp.json)
+        .then((resp) => console.log(json));
+      // 삭제
+      fetch("/delete", {
+        method: "delete",
+      })
+        .then((resp) => resp.json)
+        .then((resp) => console.log(json));
+    </script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-<!-- views/ToDoDirective.vue -->
+<!-- views/TodoList.vue -->
 <template>
   <div id="myDIV" class="header">
     <h2>My To Do List</h2>
@@ -7,17 +7,19 @@
   </div>
 
   <ul id="myUL">
-    <li
-      v-for="todo in todos"
-      v-bind:class="{ checked: todo.complete }"
-      v-on:click.self="todoComplete(todo.no)"
-    >
-      {{ todo.task }}
-      <span class="close" v-on:click.stop="delTodo(todo.no)">X</span>
-    </li>
+    <!-- <li/> 태그 원래 위치 -->
+    <TaskInfo
+      v-for="info in todos"
+      v-bind:todo="info"
+      v-on:taskChecked="todoComplete"
+      v-on:delTask="delTodo"
+    />
   </ul>
+
+  <!---->
 </template>
 <script setup>
+import TaskInfo from "@/components/TaskInfo.vue";
 import { ref, reactive } from "vue";
 const todos = reactive([
   { no: 1, task: "Hit the gym", complete: false },
@@ -27,7 +29,6 @@ const todos = reactive([
   { no: 5, task: "Read a book", complete: false },
   { no: 6, task: "Organize office", complete: false },
 ]);
-
 // todo 완료여부 처리 => li 태그의 class 속성 값 제어
 const todoComplete = (selecteNo) => {
   todos.forEach((todo) => {
@@ -58,7 +59,7 @@ const newElement = () => {
   todos.push(newTodo);
 };
 </script>
-<style scoped>
+<style>
 /* Include the padding and border in an element's total width and height */
 * {
   box-sizing: border-box;
