@@ -8,36 +8,62 @@
   <body>
     <script>
       const server = `https://jsonplaceholder.typicode.com/posts`;
-      const users = [{ id: 1, title: "..." }];
+      // const users = [{ id: 1, title: "..." }];
       // 전체조회
-      fetch("/")
-        .then((resp) => resp.json)
-        .then((json) => console.log(json));
+      fetch(`${server}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("전체조회", data);
+        })
+        .catch((err) => console.log(err));
+      const id = 1;
       // 단건조회
-      fetch("/1")
-        .then((resp) => resp.json)
-        .then((json) => console.log(json));
-      // 수정
-      fetch("/update/1", {
-        method: "put",
-        body: JSON.stringify({
-          id: 1,
-          title: "asd",
-          body: "qwer",
-          userId: 1,
-        }),
+      fetch(`${server}/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("단건조회", data);
+        })
+        .catch((err) => console.log(err));
+      const newPost = {
+        userId: 4,
+        title: "Hello",
+        body: "Hi",
+      };
+      // 등록
+      fetch(`${server}`, {
+        method: "post",
         headers: {
-          "content-type": "application/json; charset=UTF-8",
+          "Content-type": "application/json",
         },
+        body: JSON.stringify(newPost),
       })
-        .then((resp) => resp.json)
-        .then((resp) => console.log(json));
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("등록", data);
+        })
+        .catch((err) => console.log(err));
+      // 수정
+      fetch(`${server}/${id}`, {
+        method: "put",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(newPost),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("수정", data);
+        })
+        .catch((err) => console.log(err));
       // 삭제
-      fetch("/delete", {
+      fetch(`${server}/${id}`, {
         method: "delete",
       })
-        .then((resp) => resp.json)
-        .then((resp) => console.log(json));
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("삭제", data);
+        })
+        .catch((err) => console.log(err));
     </script>
   </body>
 </html>
